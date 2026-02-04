@@ -1,9 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../assets/logo.png';
 
 const GrievanceComplaints = () => {
+    const [formData, setFormData] = useState({
+        clientName: '',
+        signature: '',
+        date: ''
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Grievance and Complaints Form Data:', formData);
+        alert('Form submitted successfully!');
+    };
+
     return (
-        <div className="w-full flex flex-col items-center bg-gray-100 min-h-screen p-8 text-black font-sans gap-8">
+        <form onSubmit={handleSubmit} className="w-full flex flex-col items-center bg-gray-100 min-h-screen p-8 text-black font-sans gap-8">
             {/* Page 1 */}
             <div className="bg-white w-[210mm] min-h-[297mm] shadow-lg p-[20mm] relative flex flex-col text-[12px] leading-relaxed border border-gray-300">
                 <div className="flex flex-col items-center mb-6">
@@ -173,7 +193,7 @@ const GrievanceComplaints = () => {
             <div className="bg-white w-[210mm] min-h-[297mm] shadow-lg p-[20mm] relative flex flex-col text-[12px] leading-relaxed border border-gray-300">
                 <div className="space-y-4 text-justify">
                     <ol className="list-decimal ml-8 space-y-4" start="11">
-                        <li>If the complaint or grievance is not the subject of current litigation, the Regional Office must determine if the complainant has filed a complaint or grievance with the provider and, if applicable, what resolution was suggested.</li>
+                        <li>If the complaint or grievance is the subject of current litigation, the Regional Office must determine if the complainant has filed a complaint or grievance with the provider and, if applicable, what resolution was suggested.</li>
                         <li>If the complaint or grievance was filed with the provider and the individual was not satisfied with the outcome. The individual refuses to communicate with the provider. The provider has not taken any action or there is not a provider involved in the complaint or grievance, the Regional Office will review/investigate the complaint or grievance and attempt to solve the underlying complaint or grievance.</li>
                         <li>If the complainant has not previously filed the complaint or grievance with the provider, the Regional Office shall advise the complainant to first exhaust all remedies available through the provider. The Regional Office must still record the complaint or grievance and forward it to the provider. The Regional Office shall also inform the complainant that the complaint or grievance will be promptly forwarded to the provider and that the provider will contact the complainant to resolve the matter. The Regional Office will follow up within five (5) business days of the referral to verify that the complaint or grievance is in the process of being resolved. The Regional Office is not prohibited from reducing the time period for this follow-up. In no case, however, shall the follow-up occur more than five business days from the referral date.</li>
                         <li>If the Regional Office discovers, upon its follow-up of the referral to the provider, that the provider has begun to review the complaint and is working toward resolution, the Regional Office will record that information and request that the provider forward to the Regional Office notice of the resolution of the complaint or grievance. The Regional Office does not need to take additional action unless circumstances demand further inquiry/action.</li>
@@ -217,19 +237,29 @@ const GrievanceComplaints = () => {
 
                     <div className="mt-20">
                         <p>
-                            I <input className="border-b border-black w-64 outline-none px-2 text-center" /> fully understand PHS policy and procedures for complaints and grievances.
+                            I <input name="clientName" value={formData.clientName} onChange={handleChange} className="border-b border-black w-64 outline-none px-2 text-center" /> fully understand PHS policy and procedures for complaints and grievances.
                         </p>
                     </div>
 
                     <div className="mt-32 flex justify-between items-end gap-12">
                         <div className="flex-1">
-                            <input className="w-full border-b border-black outline-none mb-1 px-4" />
+                            <input name="signature" value={formData.signature} onChange={handleChange} className="w-full border-b border-black outline-none mb-1 px-4" />
                             <div className="text-left font-bold text-[10px]">Client/Client Representative Signature</div>
                         </div>
                         <div className="w-[200px]">
-                            <input className="w-full border-b border-black outline-none mb-1 px-4 text-center" />
+                            <input name="date" value={formData.date} onChange={handleChange} className="w-full border-b border-black outline-none mb-1 px-4 text-center" />
                             <div className="text-center font-bold text-[10px]">Date</div>
                         </div>
+                    </div>
+
+                    {/* Submit Button */}
+                    <div className="flex justify-center mt-12">
+                        <button
+                            type="submit"
+                            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-200"
+                        >
+                            Submit Form
+                        </button>
                     </div>
                 </div>
 
@@ -237,7 +267,7 @@ const GrievanceComplaints = () => {
                     5 | Page
                 </div>
             </div>
-        </div>
+        </form>
     );
 };
 

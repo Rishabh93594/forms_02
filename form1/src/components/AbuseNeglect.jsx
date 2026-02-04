@@ -1,9 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../assets/logo.png';
 
 const AbuseNeglect = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        signature: '',
+        date: ''
+    });
+
+    const handleChange = (field, value) => {
+        setFormData({ ...formData, [field]: value });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Abuse, Neglect and Exploitation Form Data:', formData);
+        alert('Form submitted successfully! Check console for data.');
+    };
+
     return (
-        <div className="w-full flex flex-col items-center bg-gray-100 min-h-screen p-8 text-black font-sans gap-8">
+        <form onSubmit={handleSubmit} className="w-full flex flex-col items-center bg-gray-100 min-h-screen p-8 text-black font-sans gap-8">
             {/* Page 1 */}
             <div className="bg-white w-[210mm] min-h-[297mm] shadow-lg p-[20mm] relative flex flex-col text-[12px] leading-relaxed border border-gray-300">
                 {/* Header */}
@@ -110,28 +126,50 @@ const AbuseNeglect = () => {
 
                     <div className="mt-12">
                         <p>
-                            I <input className="border-b border-black w-64 outline-none px-2 text-center" /> fully understand Pacific Health Systems policy and procedures for Abuse, Neglect, and Exploitation.
+                            I <input
+                                className="border-b border-black w-64 outline-none px-2 text-center"
+                                value={formData.name}
+                                onChange={(e) => handleChange('name', e.target.value)}
+                            /> fully understand Pacific Health Systems policy and procedures for Abuse, Neglect, and Exploitation.
                         </p>
                     </div>
 
                     {/* Signatures */}
-                    <div className="mt-20 flex justify-between items-end gap-12">
+                    <div className="mt-20 flex justify-between items-end gap-12 mb-6">
                         <div className="flex-1">
-                            <input className="w-full border-b border-black outline-none mb-1 px-2" />
+                            <input
+                                className="w-full border-b border-black outline-none mb-1 px-2"
+                                value={formData.signature}
+                                onChange={(e) => handleChange('signature', e.target.value)}
+                            />
                             <div className="text-left font-bold text-[10px]">Client/Client Representative Signature</div>
                         </div>
                         <div className="w-[150px]">
-                            <input className="w-full border-b border-black outline-none mb-1 px-2 text-center" />
+                            <input
+                                className="w-full border-b border-black outline-none mb-1 px-2 text-center"
+                                value={formData.date}
+                                onChange={(e) => handleChange('date', e.target.value)}
+                            />
                             <div className="text-center font-bold text-[10px]">Date</div>
                         </div>
                     </div>
+                </div>
+
+                {/* Submit Button */}
+                <div className="flex justify-center mt-6 mb-6">
+                    <button
+                        type="submit"
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-200"
+                    >
+                        Submit Form
+                    </button>
                 </div>
 
                 <div className="absolute bottom-8 left-0 w-full text-center text-[10px]">
                     Page 2 / 2
                 </div>
             </div>
-        </div>
+        </form>
     );
 };
 

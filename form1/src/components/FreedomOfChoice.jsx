@@ -1,8 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const FreedomOfChoice = () => {
+    const [formData, setFormData] = useState({
+        planningAdminName: '',
+        planningAdminDate: '',
+        recipientName: '',
+        recipientDate: '',
+        authorizedRepName: '',
+        authorizedRepDate: '',
+        witnessName: '',
+        witnessDate: ''
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Freedom of Choice Form Data:', formData);
+        alert('Form submitted successfully!');
+    };
+
     return (
-        <div className="w-full flex flex-col items-center bg-gray-100 min-h-screen p-8 text-black font-sans gap-8">
+        <form onSubmit={handleSubmit} className="w-full flex flex-col items-center bg-gray-100 min-h-screen p-8 text-black font-sans gap-8">
 
             {/* Page 1: Instructions */}
             <div className="bg-white w-[210mm] min-h-[297mm] shadow-lg p-[20mm] relative flex flex-col text-[12px] leading-relaxed border border-gray-300">
@@ -112,11 +137,21 @@ const FreedomOfChoice = () => {
 
                     <div className="flex justify-between items-end gap-4 mt-8">
                         <div className="flex-1">
-                            <input className="w-full border-b border-black outline-none" />
+                            <input
+                                name="planningAdminName"
+                                value={formData.planningAdminName}
+                                onChange={handleChange}
+                                className="w-full border-b border-black outline-none"
+                            />
                             <div className="text-[10px] mt-1">Planning List Administrator/ Support Coordinator <br /> Or Authorized Designees</div>
                         </div>
                         <div className="w-1/3">
-                            <input className="w-full border-b border-black outline-none" />
+                            <input
+                                name="planningAdminDate"
+                                value={formData.planningAdminDate}
+                                onChange={handleChange}
+                                className="w-full border-b border-black outline-none"
+                            />
                             <div className="text-[10px] mt-1">Date</div>
                         </div>
                     </div>
@@ -132,41 +167,81 @@ const FreedomOfChoice = () => {
                     <div className="space-y-6 mt-8">
                         <div className="flex justify-between items-end gap-4">
                             <div className="flex-1">
-                                <input className="w-full border-b border-black outline-none" />
+                                <input
+                                    name="recipientName"
+                                    value={formData.recipientName}
+                                    onChange={handleChange}
+                                    className="w-full border-b border-black outline-none"
+                                />
                                 <div className="text-[10px] mt-1">Recipient</div>
                             </div>
                             <div className="w-1/3">
-                                <input className="w-full border-b border-black outline-none" />
+                                <input
+                                    name="recipientDate"
+                                    value={formData.recipientDate}
+                                    onChange={handleChange}
+                                    className="w-full border-b border-black outline-none"
+                                />
                                 <div className="text-[10px] mt-1">Date</div>
                             </div>
                         </div>
 
                         <div className="flex justify-between items-end gap-4">
                             <div className="flex-1">
-                                <input className="w-full border-b border-black outline-none" />
+                                <input
+                                    name="authorizedRepName"
+                                    value={formData.authorizedRepName}
+                                    onChange={handleChange}
+                                    className="w-full border-b border-black outline-none"
+                                />
                                 <div className="text-[10px] mt-1">Authorized Representative</div>
                             </div>
                             <div className="w-1/3">
-                                <input className="w-full border-b border-black outline-none" />
+                                <input
+                                    name="authorizedRepDate"
+                                    value={formData.authorizedRepDate}
+                                    onChange={handleChange}
+                                    className="w-full border-b border-black outline-none"
+                                />
                                 <div className="text-[10px] mt-1">Date</div>
                             </div>
                         </div>
 
                         <div className="flex justify-between items-end gap-4">
                             <div className="flex-1">
-                                <input className="w-full border-b border-black outline-none" />
+                                <input
+                                    name="witnessName"
+                                    value={formData.witnessName}
+                                    onChange={handleChange}
+                                    className="w-full border-b border-black outline-none"
+                                />
                                 <div className="text-[10px] mt-1">Witness</div>
                             </div>
                             <div className="w-1/3">
-                                <input className="w-full border-b border-black outline-none" />
+                                <input
+                                    name="witnessDate"
+                                    value={formData.witnessDate}
+                                    onChange={handleChange}
+                                    className="w-full border-b border-black outline-none"
+                                />
                                 <div className="text-[10px] mt-1">Date</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                {/* Submit Button */}
+                <div className="flex justify-center mt-12">
+                    <button
+                        type="submit"
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-200"
+                    >
+                        Submit Form
+                    </button>
+                </div>
+
             </div>
-        </div>
+        </form>
     );
 };
 

@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../assets/logo.png';
 
 const Hipaaprivacy = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        signature: '',
+        date: ''
+    });
+
+    const handleChange = (field, value) => {
+        setFormData({ ...formData, [field]: value });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('HIPAA Privacy Form Data:', formData);
+        alert('Form submitted successfully! Check console for data.');
+    };
+
     return (
         <div className="w-full flex justify-center bg-gray-100 min-h-screen p-8 text-black font-sans">
-            <div className="bg-white w-[210mm] min-h-[297mm] shadow-lg p-[20mm] relative flex flex-col text-[12px] leading-relaxed border border-gray-300">
+            <form onSubmit={handleSubmit} className="bg-white w-[210mm] min-h-[297mm] shadow-lg p-[20mm] relative flex flex-col text-[12px] leading-relaxed border border-gray-300">
 
                 {/* Header */}
                 <div className="flex flex-col items-center mb-8">
@@ -33,23 +49,45 @@ const Hipaaprivacy = () => {
                     </p>
 
                     <p className="mt-12">
-                        I <input className="border-b border-black w-64 outline-none px-2 text-center" /> has read and fully understand the policy and procedures set forth for Confidentiality and HIPAA protecting an individual's private records at Pacific Health Systems, Inc.
+                        I <input
+                            className="border-b border-black w-64 outline-none px-2 text-center"
+                            value={formData.name}
+                            onChange={(e) => handleChange('name', e.target.value)}
+                        /> has read and fully understand the policy and procedures set forth for Confidentiality and HIPAA protecting an individual's private records at Pacific Health Systems, Inc.
                     </p>
                 </div>
 
                 {/* Signatures */}
-                <div className="mt-15 flex justify-between items-end">
+                <div className="mt-15 flex justify-between items-end mb-6">
                     <div className="w-1/2">
-                        <input className="w-full border-b border-black outline-none mb-1 px-4" />
+                        <input
+                            className="w-full border-b border-black outline-none mb-1 px-4"
+                            value={formData.signature}
+                            onChange={(e) => handleChange('signature', e.target.value)}
+                        />
                         <div className="text-center font-bold">Client/ Representative Signature</div>
                     </div>
                     <div className="w-1/3">
-                        <input className="w-full border-b border-black outline-none mb-1 px-4 text-center" />
+                        <input
+                            className="w-full border-b border-black outline-none mb-1 px-4 text-center"
+                            value={formData.date}
+                            onChange={(e) => handleChange('date', e.target.value)}
+                        />
                         <div className="text-center font-bold">Date</div>
                     </div>
                 </div>
 
-            </div>
+                {/* Submit Button */}
+                <div className="flex justify-center mt-6">
+                    <button
+                        type="submit"
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-200"
+                    >
+                        Submit Form
+                    </button>
+                </div>
+
+            </form>
         </div>
     );
 };

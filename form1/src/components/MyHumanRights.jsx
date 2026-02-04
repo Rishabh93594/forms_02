@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import one from '../assets/one.jpg';
 import two from '../assets/two.png';
 import three from '../assets/three.jpg';
@@ -94,10 +94,26 @@ const MyHumanRights = () => {
         { text: "Right to work in the community.", img: twentytwo },
     ];
 
+    const [formData, setFormData] = useState({
+        clientName: '',
+        date: '',
+        signature: '',
+        dob: ''
+    });
+
+    const handleChange = (field, value) => {
+        setFormData({ ...formData, [field]: value });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('My Human Rights Form Data:', formData);
+        alert('Form submitted successfully! Check console for data.');
+    };
 
     return (
         <div className="w-full flex justify-center bg-gray-100 min-h-screen p-8 text-black font-sans">
-            <div className="bg-white w-[210mm] min-h-[297mm] shadow-lg p-[10mm] relative flex flex-col text-[10px] leading-tight border border-gray-300">
+            <form onSubmit={handleSubmit} className="bg-white w-[210mm] min-h-[297mm] shadow-lg p-[10mm] relative flex flex-col text-[10px] leading-tight border border-gray-300">
 
                 <h1 className="text-center font-bold text-lg mb-6">My Human Rights</h1>
 
@@ -129,22 +145,50 @@ const MyHumanRights = () => {
                 </div>
 
 
-                <div className="mt-8 pt-4 space-y-4">
+                <div className="mt-8 pt-4 space-y-4 mb-6">
                     <div className="flex gap-2 items-end">
                         <span className="w-20 font-bold">Client Name:</span>
-                        <input className="flex-1 border-b border-black outline-none" />
+                        <input
+                            className="flex-1 border-b border-black outline-none"
+                            value={formData.clientName}
+                            onChange={(e) => handleChange('clientName', e.target.value)}
+                        />
                         <span className="w-10 text-right font-bold">Date:</span>
-                        <div className="w-32 border-b border-black flex items-end justify-center">___/___/______</div>
+                        <input
+                            className="w-32 border-b border-black outline-none text-center"
+                            value={formData.date}
+                            onChange={(e) => handleChange('date', e.target.value)}
+                            placeholder="MM/DD/YYYY"
+                        />
                     </div>
                     <div className="flex gap-2 items-end">
                         <span className="w-20 font-bold">Signature:</span>
-                        <input className="flex-1 border-b border-black outline-none" />
+                        <input
+                            className="flex-1 border-b border-black outline-none"
+                            value={formData.signature}
+                            onChange={(e) => handleChange('signature', e.target.value)}
+                        />
                         <span className="w-10 text-right font-bold">DOB:</span>
-                        <div className="w-32 border-b border-black flex items-end justify-center">___/___/______</div>
+                        <input
+                            className="w-32 border-b border-black outline-none text-center"
+                            value={formData.dob}
+                            onChange={(e) => handleChange('dob', e.target.value)}
+                            placeholder="MM/DD/YYYY"
+                        />
                     </div>
                 </div>
 
-            </div>
+                {/* Submit Button */}
+                <div className="flex justify-center mt-6">
+                    <button
+                        type="submit"
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-200"
+                    >
+                        Submit Form
+                    </button>
+                </div>
+
+            </form>
         </div>
     );
 };

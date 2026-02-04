@@ -1,9 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../assets/logo.png';
 
 const AdvanceDirectives = () => {
+    const [formData, setFormData] = useState({
+        individualName: '',
+        dob: '',
+        initials1: '',
+        initials2: '',
+        initials3: '',
+        checkChoice: '', // 'executed', 'notExecuted', 'additionalInfo'
+        signatureIndividual: '',
+        signatureWitness: '',
+        dateIndividual: '',
+        dateWitness: ''
+    });
+
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: type === 'checkbox' ? (checked ? value : '') : value
+        }));
+    };
+
+    const handleCheck = (choice) => {
+        setFormData(prev => ({
+            ...prev,
+            checkChoice: choice
+        }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Advance Directives Form Data:', formData);
+        alert('Form submitted successfully!');
+    };
+
     return (
-        <div className="w-full flex flex-col items-center bg-gray-100 min-h-screen p-8 text-black font-sans gap-8">
+        <form onSubmit={handleSubmit} className="w-full flex flex-col items-center bg-gray-100 min-h-screen p-8 text-black font-sans gap-8">
 
             {/* Page 1 */}
             <div className="bg-white w-[210mm] min-h-[297mm] shadow-lg p-[20mm] relative flex flex-col text-[12px] leading-relaxed border border-gray-300">
@@ -51,9 +85,19 @@ const AdvanceDirectives = () => {
                 <div className="mt-auto pt-8">
                     <div className="flex gap-2 items-end">
                         <span>Individual's Name:</span>
-                        <input className="flex-1 border-b border-black outline-none border-dashed" />
+                        <input
+                            name="individualName"
+                            value={formData.individualName}
+                            onChange={handleChange}
+                            className="flex-1 border-b border-black outline-none border-dashed"
+                        />
                         <span>DOB</span>
-                        <input className="w-48 border-b border-black outline-none border-dashed" />
+                        <input
+                            name="dob"
+                            value={formData.dob}
+                            onChange={handleChange}
+                            className="w-48 border-b border-black outline-none border-dashed"
+                        />
                     </div>
                     <div className="text-xs text-gray-500 mt-8 border-t border-gray-300 pt-2">1 | Page</div>
                 </div>
@@ -70,7 +114,12 @@ const AdvanceDirectives = () => {
                             I have been given written materials on my right to accept or refuse medical and surgical treatment and my rights to formulate advance directives.
                             <div className="flex justify-end mt-2">
                                 <div className="flex items-end gap-2">
-                                    <input className="w-32 border-b border-black outline-none text-center" />
+                                    <input
+                                        name="initials1"
+                                        value={formData.initials1}
+                                        onChange={handleChange}
+                                        className="w-32 border-b border-black outline-none text-center"
+                                    />
                                     <span className="text-xs">(individuals' initials)</span>
                                 </div>
                             </div>
@@ -82,7 +131,12 @@ const AdvanceDirectives = () => {
                         <div>
                             I understand that I am not required to have an Advance Directive in order to receive medical treatment.
                             <div className="inline-flex items-end gap-2 ml-2">
-                                <input className="w-32 border-b border-black outline-none text-center" />
+                                <input
+                                    name="initials2"
+                                    value={formData.initials2}
+                                    onChange={handleChange}
+                                    className="w-32 border-b border-black outline-none text-center"
+                                />
                                 <span className="text-xs">(individuals' initials)</span>
                             </div>
                         </div>
@@ -93,7 +147,12 @@ const AdvanceDirectives = () => {
                         <div>
                             I understand that the terms of any Advance Directive that I execute will be followed by Pacific Health Systems PCH to the extent permitted by law and in accordance with the service's policies and procedures.
                             <div className="inline-flex items-end gap-2 ml-2">
-                                <input className="w-32 border-b border-black outline-none text-center" />
+                                <input
+                                    name="initials3"
+                                    value={formData.initials3}
+                                    onChange={handleChange}
+                                    className="w-32 border-b border-black outline-none text-center"
+                                />
                                 <span className="text-xs">(individuals' initials)</span>
                             </div>
                         </div>
@@ -104,20 +163,26 @@ const AdvanceDirectives = () => {
                     <h3 className="font-bold underline uppercase mb-4">PLEASE CHECK ONE OF THE FOLLOWING STATEMENTS</h3>
 
                     <div className="space-y-6">
-                        <div className="flex gap-2">
-                            <div className="w-16 border-b border-black h-6 shrink-0"></div>
+                        <div className="flex gap-2 cursor-pointer" onClick={() => handleCheck('executed')}>
+                            <div className={`w-6 h-6 border-b border-black shrink-0 flex items-center justify-center font-bold`}>
+                                {formData.checkChoice === 'executed' ? 'X' : ''}
+                            </div>
                             <p>
                                 I have executed an Advance Directive and will provide a copy to Pacific Health Systems. I understand that the staff and physicians associated with Pacific Health Systems will not be able to follow the terms of my Advance Directive until I provide a copy to the staff.
                             </p>
                         </div>
-                        <div className="flex gap-2">
-                            <div className="w-16 border-b border-black h-6 shrink-0"></div>
+                        <div className="flex gap-2 cursor-pointer" onClick={() => handleCheck('notExecuted')}>
+                            <div className={`w-6 h-6 border-b border-black shrink-0 flex items-center justify-center font-bold`}>
+                                {formData.checkChoice === 'notExecuted' ? 'X' : ''}
+                            </div>
                             <p>
                                 I have not executed an Advance Directive and do not wish to discuss Advance Directives further, at this time.
                             </p>
                         </div>
-                        <div className="flex gap-2">
-                            <div className="w-16 border-b border-black h-6 shrink-0"></div>
+                        <div className="flex gap-2 cursor-pointer" onClick={() => handleCheck('additionalInfo')}>
+                            <div className={`w-6 h-6 border-b border-black shrink-0 flex items-center justify-center font-bold`}>
+                                {formData.checkChoice === 'additionalInfo' ? 'X' : ''}
+                            </div>
                             <p>
                                 I have not executed an Advance Directive but would like to obtain additional information about Advance Directives.
                             </p>
@@ -129,28 +194,58 @@ const AdvanceDirectives = () => {
                 <div className="mt-12 space-y-12">
                     <div className="flex justify-between gap-12">
                         <div className="flex-1">
-                            <input className="w-full border-b border-black outline-none mb-1" />
+                            <input
+                                name="signatureIndividual"
+                                value={formData.signatureIndividual}
+                                onChange={handleChange}
+                                className="w-full border-b border-black outline-none mb-1"
+                            />
                             <div className="text-xs font-bold">Individual/ Guardian Signature</div>
                         </div>
                         <div className="flex-1">
-                            <input className="w-full border-b border-black outline-none mb-1" />
+                            <input
+                                name="signatureWitness"
+                                value={formData.signatureWitness}
+                                onChange={handleChange}
+                                className="w-full border-b border-black outline-none mb-1"
+                            />
                             <div className="text-xs font-bold">Witness</div>
                         </div>
                     </div>
                     <div className="flex justify-between gap-12">
                         <div className="flex-1">
-                            <input className="w-full border-b border-black outline-none mb-1" />
+                            <input
+                                name="dateIndividual"
+                                value={formData.dateIndividual}
+                                onChange={handleChange}
+                                className="w-full border-b border-black outline-none mb-1"
+                            />
                             <div className="text-xs font-bold">Date</div>
                         </div>
                         <div className="flex-1">
-                            <input className="w-full border-b border-black outline-none mb-1" />
+                            <input
+                                name="dateWitness"
+                                value={formData.dateWitness}
+                                onChange={handleChange}
+                                className="w-full border-b border-black outline-none mb-1"
+                            />
                             <div className="text-xs font-bold">Date</div>
                         </div>
                     </div>
                 </div>
 
+                {/* Submit Button */}
+                <div className="flex justify-center mt-12">
+                    <button
+                        type="submit"
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-200"
+                    >
+                        Submit Form
+                    </button>
+                </div>
+
             </div>
-        </div>
+        </form>
     );
 };
 

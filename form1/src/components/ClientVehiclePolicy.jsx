@@ -1,11 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../assets/logo.png';
 
 const ClientVehiclePolicy = () => {
+    const [formData, setFormData] = useState({
+        clientSignature: '',
+        clientDate: '',
+        representativeSignature: '',
+        representativeDate: ''
+    });
+
+    const handleChange = (field, value) => {
+        setFormData({ ...formData, [field]: value });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Client Vehicle Policy Form Data:', formData);
+        alert('Form submitted successfully! Check console for data.');
+    };
+
     return (
         <div className="w-full flex justify-center bg-gray-100 min-h-screen p-8 text-black font-sans">
             {/* Paper Container */}
-            <div className="bg-white w-[210mm] min-h-[297mm] shadow-lg p-[20mm] relative flex flex-col text-[12px] leading-relaxed border border-gray-300">
+            <form onSubmit={handleSubmit} className="bg-white w-[210mm] min-h-[297mm] shadow-lg p-[20mm] relative flex flex-col text-[12px] leading-relaxed border border-gray-300">
 
                 {/* Header */}
                 <div className="flex flex-col items-center mb-6">
@@ -99,28 +116,54 @@ const ClientVehiclePolicy = () => {
                     </div>
 
                     {/* Signatures */}
-                    <div className="flex justify-between mt-12 gap-8">
+                    <div className="flex justify-between mt-12 gap-8 mb-6">
                         <div className="flex gap-4 w-1/2">
                             <div className="flex-grow">
-                                <input className="w-full border-b border-black outline-none" />
+                                <input
+                                    className="w-full border-b border-black outline-none"
+                                    value={formData.clientSignature}
+                                    onChange={(e) => handleChange('clientSignature', e.target.value)}
+                                />
                                 <div className="text-xs font-bold italic mt-1">Client Representative Signature</div>
                             </div>
                             <div className="w-24">
-                                <input className="w-full border-b border-black outline-none" />
+                                <input
+                                    className="w-full border-b border-black outline-none"
+                                    value={formData.clientDate}
+                                    onChange={(e) => handleChange('clientDate', e.target.value)}
+                                />
                                 <div className="text-xs font-bold italic mt-1">Date</div>
                             </div>
                         </div>
                         <div className="flex gap-4 w-1/2">
                             <div className="flex-grow">
-                                <input className="w-full border-b border-black outline-none" />
+                                <input
+                                    className="w-full border-b border-black outline-none"
+                                    value={formData.representativeSignature}
+                                    onChange={(e) => handleChange('representativeSignature', e.target.value)}
+                                />
                                 <div className="text-xs font-bold italic mt-1">Admission Representative Signature</div>
                             </div>
                             <div className="w-24">
-                                <input className="w-full border-b border-black outline-none" />
+                                <input
+                                    className="w-full border-b border-black outline-none"
+                                    value={formData.representativeDate}
+                                    onChange={(e) => handleChange('representativeDate', e.target.value)}
+                                />
                                 <div className="text-xs font-bold italic mt-1">Date</div>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                {/* Submit Button */}
+                <div className="flex justify-center mt-6 mb-6">
+                    <button
+                        type="submit"
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-200"
+                    >
+                        Submit Form
+                    </button>
                 </div>
 
                 {/* Footer */}
@@ -128,7 +171,7 @@ const ClientVehiclePolicy = () => {
                     1 | Page
                 </div>
 
-            </div>
+            </form>
         </div>
     );
 };
